@@ -148,6 +148,39 @@ main{max-width:1280px;margin:22px auto 0;display:grid;grid-template-columns:minm
 
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--white);font-family:var(--f-display);font-size:24px;padding:10px 22px;border-radius:999px;z-index:40;box-shadow:var(--shadow);animation:pop .35s ease-out}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;height:100%}
+
+/* Winner celebration */
+.winbtn{margin-top:14px;background:var(--sun-light);color:var(--ink);box-shadow:0 5px 0 #C9A400;font-family:var(--f-display);font-size:20px;font-weight:400;letter-spacing:.03em}
+.win{position:fixed;inset:0;z-index:25;display:grid;place-items:center;overflow:auto;padding:24px 16px;background:var(--ink);--wc:var(--magenta)}
+.win .rays{position:fixed;left:50%;top:50%;width:260vmax;height:260vmax;margin:-130vmax 0 0 -130vmax;background:repeating-conic-gradient(var(--wc) 0 9deg,transparent 9deg 18deg);opacity:.45;animation:spinr 40s linear infinite;pointer-events:none}
+.win .glow{position:fixed;inset:0;background:radial-gradient(circle at 50% 42%,rgba(255,217,59,.55),rgba(255,217,59,0) 55%);pointer-events:none}
+@keyframes spinr{to{transform:rotate(360deg)}}
+.deco{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.balloon{position:absolute;bottom:-180px;width:72px;height:90px;border-radius:50% 50% 46% 46%;box-shadow:inset -10px -12px 0 rgba(0,0,0,.15),inset 10px 10px 0 rgba(255,255,255,.25);animation:rise linear infinite}
+.balloon::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:80px;background:rgba(255,255,255,.7)}
+@keyframes rise{from{transform:translate(0,0) rotate(-4deg)}50%{transform:translate(var(--dx),-65vh) rotate(5deg)}to{transform:translate(0,-140vh) rotate(-4deg)}}
+.star{position:absolute;color:var(--sun-light);line-height:1;animation:twinkle 1.4s ease-in-out infinite alternate;text-shadow:0 0 18px rgba(255,217,59,.9)}
+@keyframes twinkle{from{transform:scale(.4) rotate(0);opacity:.3}to{transform:scale(1.2) rotate(40deg);opacity:1}}
+.win-card{position:relative;text-align:center;max-width:1200px;width:100%;color:var(--white);display:flex;flex-direction:column;align-items:center;gap:10px}
+.trophy{width:clamp(100px,14vw,180px);height:auto;animation:trophy 1s ease-in-out infinite alternate;filter:drop-shadow(0 8px 0 rgba(0,0,0,.3))}
+@keyframes trophy{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-14px) rotate(5deg)}}
+.win-kicker{font-family:var(--f-display);font-size:clamp(22px,3.4vw,40px);color:var(--sun-light);letter-spacing:.1em;text-shadow:0 4px 0 rgba(0,0,0,.35);animation:grow .8s cubic-bezier(.2,1.6,.4,1) both}
+.win-block{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%}
+.win-team{font-family:var(--f-display);font-size:clamp(56px,11vw,150px);line-height:.95;color:var(--white);-webkit-text-stroke:3px var(--ink);text-shadow:0 8px 0 var(--wc),0 14px 0 rgba(0,0,0,.35);animation:grow 1.1s .5s cubic-bezier(.2,1.6,.4,1) both,wobble 2.6s 1.8s ease-in-out infinite;text-wrap:balance}
+.multi .win-team{font-size:clamp(40px,7vw,96px)}
+@keyframes grow{from{transform:scale(.1);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes wobble{0%,100%{transform:rotate(0) scale(1)}50%{transform:rotate(-2deg) scale(1.05)}}
+.win-pts{font-family:var(--f-display);font-size:clamp(22px,3vw,36px);background:var(--sun-light);color:var(--ink);border-radius:999px;padding:4px 24px;box-shadow:0 5px 0 rgba(0,0,0,.3);animation:grow .6s 1s both}
+.win-names{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 18px;margin-top:10px}
+.win-names span{font-family:var(--f-display);font-size:clamp(28px,4.8vw,64px);background:var(--white);color:var(--wc);padding:6px 26px;border-radius:999px;border:4px solid var(--wc);box-shadow:0 7px 0 rgba(0,0,0,.35);animation:namepop .8s cubic-bezier(.2,1.8,.4,1) both,bob 1.6s ease-in-out infinite alternate}
+.multi .win-names span{font-size:clamp(22px,3.2vw,40px)}
+@keyframes namepop{from{transform:scale(0) rotate(-14deg);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes bob{to{translate:0 -6px}}
+.win-rest{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px}
+.win-rest span{background:rgba(255,255,255,.16);border-radius:999px;padding:4px 14px;font-weight:800;display:flex;align-items:center;gap:8px}
+.win-rest i{width:12px;height:12px;border-radius:3px}
+.win-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.win-btns .btn{width:auto;padding:12px 24px;font-size:18px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -186,6 +219,7 @@ main{max-width:1280px;margin:22px auto 0;display:grid;grid-template-columns:minm
     <section class="panel">
       <h2>Scoreboard</h2>
       <div class="teams" id="teams"></div>
+      <button class="btn winbtn" id="winBtn">Show winners</button>
     </section>
   </div>
 
@@ -204,6 +238,7 @@ main{max-width:1280px;margin:22px auto 0;display:grid;grid-template-columns:minm
 </main>
 
 <div class="overlay" id="overlay" hidden></div>
+<div class="win" id="winScreen" hidden></div>
 <canvas id="confetti"></canvas>
 
 <script>
@@ -465,8 +500,7 @@ function closeTile(){
 }
 function finale(){
   const top=Math.max(...S.scores), win=TEAMS.filter((_,i)=>S.scores[i]===top).map(t=>t.name);
-  SFX.fanfare(); confetti(); toast("Winners: "+win.join(" & ")+"!");
-  say("Great job everyone! The winners are "+win.join(" and ")+"!");
+  setTimeout(showWinners,600);
 }
 
 /* ---------- Toast & confetti ---------- */
@@ -475,18 +509,70 @@ function toast(t){
   setTimeout(()=>d.remove(),1800);
 }
 const cv=document.getElementById("confetti"), cx2=cv.getContext("2d"); let parts=[], raf=null;
-function confetti(color){
+function confetti(color,ox,oy,count){
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  cv.width=innerWidth;cv.height=innerHeight;
+  if(!raf){cv.width=innerWidth;cv.height=innerHeight;}
   const cols=color?[color,"#FFD93B","#FFFFFF"]:TEAMS.map(t=>t.hex).concat("#FFD93B");
-  for(let i=0;i<160;i++)parts.push({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*16-4,s:6+Math.random()*8,r:Math.random()*6,c:cols[i%cols.length],l:120});
+  for(let i=0;i<(count||160);i++)parts.push({x:ox??innerWidth/2,y:oy??innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*16-4,s:6+Math.random()*8,r:Math.random()*6,c:cols[i%cols.length],l:120});
   if(!raf)raf=requestAnimationFrame(stepConf);
 }
 function stepConf(){
   cx2.clearRect(0,0,cv.width,cv.height);
-  parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.45;p.vx*=.99;p.r+=.2;p.l--;cx2.save();cx2.translate(p.x,p.y);cx2.rotate(p.r);cx2.fillStyle=p.c;cx2.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx2.restore();});
+  parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=(p.g??.45);p.vx*=.99;p.r+=.2;p.l--;cx2.save();cx2.translate(p.x,p.y);cx2.rotate(p.r);cx2.fillStyle=p.c;cx2.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx2.restore();});
   parts=parts.filter(p=>p.l>0&&p.y<cv.height+40);
   raf=parts.length?requestAnimationFrame(stepConf):(cx2.clearRect(0,0,cv.width,cv.height),null);
+}
+
+
+/* ---------- Winner celebration ---------- */
+const TROPHY='<svg class="trophy" viewBox="0 0 120 130" aria-hidden="true"><path d="M30 10h60v28c0 22-13 38-30 38S30 60 30 38z" fill="#FFD93B" stroke="#231C40" stroke-width="5"/><path d="M30 20H12c0 20 8 30 22 32M90 20h18c0 20-8 30-22 32" fill="none" stroke="#231C40" stroke-width="6"/><path d="M50 76h20v18H50z" fill="#F5A40C" stroke="#231C40" stroke-width="5"/><path d="M32 96h56v16H32z" fill="#FFD93B" stroke="#231C40" stroke-width="5"/><path d="M24 112h72v12H24z" fill="#D81B72" stroke="#231C40" stroke-width="5"/><path d="M60 24l5 10 11 1-8 7 3 11-11-6-11 6 3-11-8-7 11-1z" fill="#FFFFFF"/><path d="M40 20c0 14 2 26 8 34" stroke="#FFFFFF" stroke-width="5" fill="none" opacity=".6" stroke-linecap="round"/></svg>';
+let winTimer=null;
+function showWinners(){
+  const top=Math.max(...S.scores), idx=TEAMS.map((_,i)=>i).filter(i=>S.scores[i]===top);
+  const w=document.getElementById("winScreen");
+  const blocks=idx.map((i,b)=>{
+    const members=S.students.slice(i*5,i*5+5);
+    return '<div class="win-block" style="--wc:'+TEAMS[i].hex+'"><div class="win-team">'+TEAMS[i].name+'</div><div class="win-pts">'+top+' points</div><div class="win-names">'+
+      members.map((m,k)=>'<span style="animation-delay:'+(1.6+b*.6+k*.45).toFixed(2)+'s,'+(2.6+k*.2).toFixed(2)+'s">'+esc(m)+'</span>').join("")+'</div></div>';
+  }).join("");
+  const rest=TEAMS.map((t,i)=>({t,i,s:S.scores[i]})).filter(o=>!idx.includes(o.i)).sort((a,b)=>b.s-a.s);
+  w.innerHTML='<div class="rays"></div><div class="glow"></div><div class="deco" id="deco"></div>'+
+    '<div class="win-card'+(idx.length>1?' multi':'')+'">'+TROPHY+
+    '<div class="win-kicker">'+(idx.length>1?"IT'S A TIE! THE WINNERS ARE…":"AND THE WINNER IS…")+'</div>'+blocks+
+    (rest.length?'<div class="win-rest">'+rest.map(o=>'<span><i style="background:'+o.t.hex+'"></i>'+o.t.name+' · '+o.s+'</span>').join("")+'</div>':'')+
+    '<div class="win-btns"><button class="btn alt" id="winClose">Back to the game</button><button class="btn" id="winAgain">Play again</button></div></div>';
+  w.style.setProperty("--wc",TEAMS[idx[0]].hex);
+  w.hidden=false;
+  const deco=document.getElementById("deco"), cols=TEAMS.map(t=>t.hex).concat("#FFD93B","#FFFFFF","#D81B72","#1597D6");
+  let h="";
+  for(let i=0;i<16;i++)h+='<div class="balloon" style="left:'+(Math.random()*95).toFixed(1)+'%;background:'+cols[i%cols.length]+';--dx:'+((Math.random()-.5)*160).toFixed(0)+'px;animation-duration:'+(7+Math.random()*6).toFixed(1)+'s;animation-delay:'+(Math.random()*5).toFixed(1)+'s"></div>';
+  for(let i=0;i<30;i++)h+='<div class="star" style="left:'+(Math.random()*98).toFixed(1)+'%;top:'+(Math.random()*95).toFixed(1)+'%;font-size:'+(14+Math.random()*34).toFixed(0)+'px;animation-delay:'+(Math.random()*1.5).toFixed(2)+'s">★</div>';
+  deco.innerHTML=h;
+  document.getElementById("winClose").onclick=closeWinners;
+  document.getElementById("winAgain").onclick=()=>{closeWinners();S=freshState(S.students);renderAll();toast("New game ready!");};
+  for(let i=0;i<18;i++)noise(.06,.09,i*.055);
+  for(let i=0;i<18;i++)tone(110+i*4,.05,"square",.03,i*.055);
+  setTimeout(()=>{SFX.fanfare();confetti(null,innerWidth/2,innerHeight*.35,220);say((idx.length>1?"It's a tie! The winners are ":"And the winner is ")+idx.map(i=>TEAMS[i].name).join(" and ")+"! Congratulations!");},1100);
+  let n=0; clearInterval(winTimer);
+  winTimer=setInterval(()=>{
+    n++; const c=cols[Math.floor(Math.random()*cols.length)];
+    confetti(c,innerWidth*(.1+Math.random()*.8),innerHeight*(.1+Math.random()*.5),70);
+    if(n%3===0)rainConfetti(60);
+    tone(300+Math.random()*500,.25,"sine",.05);
+    if(n>=16){clearInterval(winTimer);winTimer=null;}
+  },650);
+}
+function closeWinners(){
+  clearInterval(winTimer);winTimer=null;
+  const w=document.getElementById("winScreen"); w.hidden=true; w.innerHTML="";
+  try{speechSynthesis.cancel()}catch(e){}
+}
+function rainConfetti(count){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  cv.width=innerWidth;cv.height=innerHeight;
+  const cols=TEAMS.map(t=>t.hex).concat("#FFD93B","#FFFFFF");
+  for(let i=0;i<count;i++)parts.push({x:Math.random()*innerWidth,y:-20-Math.random()*200,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,s:8+Math.random()*8,r:Math.random()*6,c:cols[i%cols.length],l:400,g:.05});
+  if(!raf)raf=requestAnimationFrame(stepConf);
 }
 
 /* ---------- Class list dialog ---------- */
@@ -514,9 +600,11 @@ document.getElementById("soundBtn").onclick=e=>{soundOn=!soundOn;e.currentTarget
 document.getElementById("voiceBtn").onclick=e=>{voiceOn=!voiceOn;e.currentTarget.setAttribute("aria-pressed",voiceOn);e.currentTarget.textContent=voiceOn?"Voice on":"Voice off";if(!voiceOn)try{speechSynthesis.cancel()}catch(_){}};
 document.getElementById("namesBtn").onclick=openNames;
 document.getElementById("resetBtn").onclick=resetGame;
+document.getElementById("winBtn").onclick=()=>{ac();showWinners();};
 document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&!document.getElementById("winScreen").hidden){closeWinners();return;}
   if(e.key==="Escape"&&!overlay.hidden){ if(tileId!==null)closeTile(); else {overlay.hidden=true;overlay.innerHTML="";} }
-  if(e.code==="Space"&&overlay.hidden&&document.activeElement.tagName!=="TEXTAREA"){e.preventDefault();spin();}
+  if(e.code==="Space"&&overlay.hidden&&document.getElementById("winScreen").hidden&&document.activeElement.tagName!=="TEXTAREA"){e.preventDefault();spin();}
 });
 try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{}}catch(e){}
 
