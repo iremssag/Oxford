@@ -192,7 +192,7 @@ main{max-width:1280px;margin:22px auto 0;display:grid;grid-template-columns:minm
   <section class="panel">
     <div class="board-head">
       <h2>Pick a post!</h2>
-      <p id="boardHint">Choose ANY tile you like · everyone talks once</p>
+      <p id="boardHint">Spin first, then choose ANY tile · everyone talks once</p>
     </div>
     <div class="board" id="board"></div>
     <div class="how">
@@ -395,7 +395,9 @@ function renderTeams(){
 const overlay=document.getElementById("overlay");
 let timerId=null, left=0, total=0, tileId=null, awardTeam=0;
 function openTile(id){
-  if(spinning)return; ac(); SFX.flip();
+  if(spinning)return; ac();
+  if(S.current===null){SFX.buzzer();toast(S.remaining.length?"Spin the wheel first!":"Everyone has spoken!");const b=document.getElementById("spinBtn");b.animate([{transform:"scale(1)"},{transform:"scale(1.08)"},{transform:"scale(1)"}],{duration:450,iterations:2});return;}
+  SFX.flip();
   tileId=id; const c=CATS[Math.floor(id/5)], it=c.items[id%5], num=(id%5)*5+Math.floor(id/5)+1;
   awardTeam=S.current!==null?teamOf(S.current):0;
   total=c.time; left=c.time; clearInterval(timerId); timerId=null;
